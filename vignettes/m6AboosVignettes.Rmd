@@ -1,0 +1,100 @@
+---
+title: "m6Aboost Vignettes"
+author:
+- name: "You Zhou"
+  affiliation: 
+  - Buchmann Institute for Molecular Life Sciences, Frankfurt am Main, Germany
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+    BiocStyle::html_document:
+        toc_float: true
+    BiocStyle::pdf_document: default
+package: cliProfiler
+vignette: |
+    %\VignetteIndexEntry{cliProfiler Vignettes}
+    %\VignetteEngine{knitr::rmarkdown}
+    %\VignetteEncoding{UTF-8}
+---
+
+```{r style, echo=FALSE, results='asis'}
+BiocStyle::markdown()
+```
+
+# Introduction
+N6-Methyladenosine (m6A) is the most abundant mRNA internal modification and 
+associate with the many different aspects of mRNA's life, e.g. exporting, 
+translation, stability and so on.   
+  
+In our paper, 
+"[Deep and accurate detection of m6A RNA modifications using miCLIP2 and m6Aboost machine learning](https://www.biorxiv.org/content/10.1101/2020.12.20.423675v1)", we 
+present a improved experiment protocol (miCLIP2) and a novel computational 
+analysis pipeline (m6Aboost). This package includes a workflow and some 
+functions for running the m6Aboost pipeline.
+
+# m6Aboost Workflow
+For running this workflow, the user may need to go through the process step in 
+our pipeline to get the truncation read counts without the C to T transition 
+and the the read counts of C to T transition. Then the user need to do the 
+peakcalling step with 
+[pureCLIP](https://github.com/skrakau/PureCLIP). After the peakcalling, user 
+need to assign the truncation and the transition read counts to the peaks that 
+output from `pureCLIP`. Please note that theoretically the m6A associated C to T 
+transition would happens one nucleotide after the m6A sites, so when we assign 
+the transitions we should assign the transition read to the peak one nucleotide 
+before the transition place. Besides, the strand information should also be 
+consider when we assign the transition read counts. These truncation and 
+transition information should be assign to the peaks and store as the metadata 
+in the `GRanges` object of peaks.  
+  
+Afterwards, user need to calculated the `mean value` of truncation and 
+transition read counts among the replicates. 
+
+## getFeatures
+For training the m6Aboost, we used the sequence, transcript region and the 
+miCLIP2 features. The miCLIP2 features includes relative signal strength (RSS) 
+and C to T transition read counts. The function `getFeatures` could help user 
+to get all these features that required by m6Aboost. Pleaes note the annotation 
+file for running the function `getFeatures` should be downloaded from 
+[GENCODE](https://www.gencodegenes.org/).
+
+```{r initialize, results="hide", warning=FALSE, message=FALSE}
+library(m6Aboost)
+## For test all the functions we need to first load the test files
+testpath <- system.file("extdata", package = "m6Aboost")
+testpath2 <- system.file("extdata", package = "cliProfiler")
+test_gff3 <- file.path(testpath2, "annotation_test.gff3")
+test <- readRDS(file.path(testpath, "test.rds"))
+
+test
+```
+
+```{r}
+## get all the features for the m6Aboost
+test<- getFeatures(test, test_gff3, "Reads_mean", "CtoT")
+test
+```
+
+## m6Aboost
+The function `m6Aboost` can be used to get the prediction result. For using 
+this function, user just need to use the output object from `getFeatures` 
+function as input and specify the name of `BSgenome` of the current species. 
+Please note that the `BSgenome` which contain the sequence information should 
+be downloaded in advance.
+
+```{r}
+out <- m6Aboost(test, "BSgenome.Mmusculus.UCSC.mm10")
+out
+```
+
+The `class` in the meta data represents whether the classifier predict this 
+site is a m6A sites or not. The `prob` means the prediction score of this site.
+
+
+
+
+
+
+
+
+
+
