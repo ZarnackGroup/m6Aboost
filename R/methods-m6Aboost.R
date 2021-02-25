@@ -27,7 +27,7 @@
 .transDF <- function(object, genome)
 {
     seq <- getSeq(genome, object+10)
-    df <- data.frame(1:length(seq))
+    df <- data.frame(seq_len(length(seq)))
     for (i in seq_len(21)) {
         k <- substr(seq,i,i)
         df[,i] <- as.factor(k)
@@ -56,36 +56,36 @@
 
 #' @rdname m6Aboost
 setMethod("m6Aboost", signature(object="GRanges"),
-          function(object, genome="", normalization=TRUE)
-          {
-              if(!is.character(genome))
-                  stop("Genome should be the name of BSgenome annotation, e.g.
-                       BSgenome.Mmusculus.UCSC.mm10")
-              if (unique(width(object)) != 1)
-                  stop("The input GRanges object should store the information
-                       of the crosslinking sites from miCLIP2 experiment. Its
-                       width should all equal to 1.")
+    function(object, genome="", normalization=TRUE)
+    {
+        if(!is.character(genome))
+            stop("Genome should be the name of BSgenome annotation, e.g.
+                 BSgenome.Mmusculus.UCSC.mm10")
+        if (unique(width(object)) != 1)
+            stop("The input GRanges object should store the information
+                 of the crosslinking sites from miCLIP2 experiment. Its
+                 width should all equal to 1.")
 
-              ## Keep only A sites
-              genome <- BSgenome::getBSgenome(genome)
-              object <- .keepA(object, genome)
+        ## Keep only A sites
+        genome <- BSgenome::getBSgenome(genome)
+        object <- .keepA(object, genome)
 
-              df <- .transDF(object, genome)
-              path <- system.file("extdata", package = "m6Aboost")
-              model <- readRDS(file.path(path, "m6Aboost.rds"))
-              df$log2SOB <- df$log2RSS
-              df$log2RSS <- NULL
-              if (normalization == T) {
-                  ## The normalization factor based on the our miLCIP2 data
-                  m <- mean(df$log2SOB)
-                  df$log2SOB <- df$log2SOB/(m/0.9122623)
-                  c <- mean(df$log2CtoT)
-                  df$log2CtoT <- df$log2CtoT/(c/0.4389567)
-              }
+        df <- .transDF(object, genome)
+        path <- system.file("extdata", package = "m6Aboost")
+        model <- readRDS(file.path(path, "m6Aboost.rds"))
+        df$log2SOB <- df$log2RSS
+        df$log2RSS <- NULL
+        if (normalization == T) {
+            ## The normalization factor based on the our miLCIP2 data
+            m <- mean(df$log2SOB)
+            df$log2SOB <- df$log2SOB/(m/0.9122623)
+            c <- mean(df$log2CtoT)
+            df$log2CtoT <- df$log2CtoT/(c/0.4389567)
+        }
 
-              pred_res <- adabag::predict.boosting(model, newdata = df)
-              object$class <- pred_res$class
-              object$prob <- pred_res$prob[,1]
-              return(object)
-          }
+        pred_res <- adabag::predict.boosting(model, newdata = df)
+        object$class <- pred_res$class
+        object$prob <- pred_res$prob[,1]
+        return(object)
+    }
 )

@@ -5,7 +5,7 @@
 #' @description An function for calculating the relative signal strength and
 #'     assign the features for the m6Aboost model
 #'
-#' @author You Zhou, Kathi Zarnack
+#' @author You Zhou
 #'
 #' @param object A GRanges object which should contains all the single
 #'     nucleotide peaks of miCLIP2 experiment.
@@ -21,13 +21,20 @@
 #' @return A GRanges object with all the information that required by the
 #'     m6Aboost model.
 #'
+#' @examples
+#'     testpath <- system.file("extdata", package = "m6Aboost")
+#'     test_gff3 <- file.path(testpath, "test_annotation.gff3")
+#'     test <- readRDS(file.path(testpath, "test.rds"))
+#'     test<- getFeatures(test, test_gff3, colname_reads="WTmean",
+#'         colname_C2T="CtoTmean")
+#'
 #' @export
 #'
 #' @rdname getFeatures
 setGeneric("getFeatures",
-           def=function(object, annotation, colname_reads="", colname_C2T="") {
-               standardGeneric("getFeatures")
-           }
+    def=function(object, annotation, colname_reads="", colname_C2T="") {
+        standardGeneric("getFeatures")
+    }
 )
 
 #' @title getFeatures for the miCILP2 data
@@ -35,7 +42,7 @@ setGeneric("getFeatures",
 #' @description An function for calculating the relative signal strength and
 #'     assign the features for the m6Aboost model
 #'
-#' @author You Zhou, Kathi Zarnack
+#' @author You Zhou
 #'
 #' @param object A GRanges object which should contains all the single
 #'     nucleotide peaks of miCLIP2 experiment.
@@ -47,12 +54,93 @@ setGeneric("getFeatures",
 #'
 #' @return A GRanges object with all the information that required by the
 #'     m6Aboost model.
+#' @examples
+#'     testpath <- system.file("extdata", package = "m6Aboost")
+#'     test_gff3 <- file.path(testpath, "test_annotation.gff3")
+#'     test <- readRDS(file.path(testpath, "test.rds"))
+#'     test<- getFeatures(test, test_gff3, colname_reads="WTmean",
+#'         colname_C2T="CtoTmean")
 #'
+#'     ## The input of m6Aboost should be the output from getFeatures function
+#'     ## Please make sure that the correct BSgenome package have installed
+#'     ## before running motifProfile. For example,
+#'     ## library("BSgenome.Mmusculus.UCSC.mm10")
+#'
+#'     test <- m6Aboost(test, "BSgenome.Mmusculus.UCSC.mm10")
 #' @export
 #'
 #' @rdname m6Aboost
 setGeneric("m6Aboost",
-           def=function(object, genome="", normalization=TRUE) {
-               standardGeneric("m6Aboost")
-           }
+    def=function(object, genome="", normalization=TRUE) {
+        standardGeneric("m6Aboost")
+    }
+)
+
+#' @title truncationAssignment for assigning the truncation read counts
+#'
+#' @description An function for assigning the truncation read counts from
+#'     bigwig.
+#' @author You Zhou
+#'
+#' @param object A GRanges object which should contains all the single
+#'     nucleotide peaks of miCLIP2 experiment.
+#' @param bw_positive A path to the big wig file of truncation read counts
+#'     at the positive strand that output from the preprocess in the m6Aboost
+#'     pipeline.
+#' @param bw_negative A path to the big wig file of truncation read counts
+#'     at the negative strand that output from the preprocess in the m6Aboost
+#'     pipeline.
+#' @param sampleName The sample name of the big wig file.
+#'
+#' @return A GRanges object with the truncation read counts.
+#'
+#' @examples
+#'     testpath <- system.file("extdata", package = "m6Aboost")
+#'     test <- readRDS(file.path(testpath, "test.rds"))
+#'     positiveBW <- file.path(testpath, "test_positive.bw")
+#'     negativeBW <- file.path(testpath, "test_negative.bw")
+#'
+#'     test <- truncationAssignment(test, positiveBW, negativeBW, "WT1")
+#'
+#' @export
+#'
+#' @rdname truncationAssignment
+setGeneric("truncationAssignment",
+    def=function(object, bw_positive, bw_negative, sampleName="") {
+        standardGeneric("truncationAssignment")
+    }
+)
+
+#' @title CtoTAssignment for assigning the truncation read counts
+#'
+#' @description An function for assigning the CtoT transition read counts from
+#'     bigwig.
+#' @author You Zhou
+#'
+#' @param object A GRanges object which should contains all the single
+#'     nucleotide peaks of miCLIP2 experiment.
+#' @param bw_positive A path to the big wig file of C to T transition read
+#'     counts at the positive strand that output from the preprocess in the
+#'     m6Aboost pipeline.
+#' @param bw_negative A path to the big wig file of C to T transition read
+#'     counts at the negative strand that output from the preprocess in the
+#'     m6Aboost pipeline.
+#' @param sampleName The sample name of the big wig file.
+#'
+#' @return A GRanges object with the truncation read counts.
+#'
+#' @examples
+#'     testpath <- system.file("extdata", package = "m6Aboost")
+#'     test <- readRDS(file.path(testpath, "test.rds"))
+#'     positiveBW <- file.path(testpath, "test_positive.bw")
+#'     negativeBW <- file.path(testpath, "test_negative.bw")
+#'
+#'     test <- truncationAssignment(test, positiveBW, negativeBW, "CtoT1")
+#' @export
+#'
+#' @rdname CtoTAssignment
+setGeneric("CtoTAssignment",
+    def=function(object, bw_positive, bw_negative, sampleName="") {
+        standardGeneric("CtoTAssignment")
+    }
 )

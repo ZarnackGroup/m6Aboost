@@ -3,15 +3,13 @@
 ## ----------------------------------------------------------------------------
 
 #' @import dplyr
+#' @import methods
+#' @import S4Vectors
 #' @importFrom GenomicRanges width
 #' @importFrom GenomicRanges start
 #' @importFrom GenomicRanges end
 #' @importFrom GenomicRanges findOverlaps
-
-
-## To fix the global variable note
-utils::globalVariables(c("elementMetadata", "queryHits" , "geneid",
-                         "reads", "predict.boosting"))
+#' @importFrom utils globalVariables
 
 ## ============================================================================
 ## Small functions
@@ -35,6 +33,11 @@ utils::globalVariables(c("elementMetadata", "queryHits" , "geneid",
     return(object)
 }
 
+## To fix the global variable note
+utils::globalVariables(c("elementMetadata", "queryHits" , "geneid",
+                         "reads", "predict.boosting", "elementMetadata<-",
+                         "subjectHits", "strand<-", "start<-", "end<-"))
+
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ## The "getFeatures" methods for GRanges objects.
 ##
@@ -45,6 +48,12 @@ setMethod("getFeatures", signature(object="GRanges"),
     {
         if(!isS4(object))
             stop("The input object should be a GRanges object.")
+        meta_name <- names(elementMetadata(object))
+        if(isTRUE(!colname_reads %in% meta_name) |
+            isTRUE(!colname_C2T %in%meta_name))
+            stop("The colname_reads and colname_C2T should be a column name
+                in the elementMetadata of the input object.")
+
         ## Load annotation file
         anno <- rtracklayer::import.gff3(con = annotation)
         anno_gene <- anno[anno$type == "gene"]

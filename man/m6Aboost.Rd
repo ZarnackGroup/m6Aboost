@@ -28,6 +28,20 @@ A GRanges object with all the information that required by the
 An function for calculating the relative signal strength and
     assign the features for the m6Aboost model
 }
+\examples{
+    testpath <- system.file("extdata", package = "m6Aboost")
+    test_gff3 <- file.path(testpath, "test_annotation.gff3")
+    test <- readRDS(file.path(testpath, "test.rds"))
+    test<- getFeatures(test, test_gff3, colname_reads="WTmean",
+        colname_C2T="CtoTmean")
+
+    ## The input of m6Aboost should be the output from getFeatures function
+    ## Please make sure that the correct BSgenome package have installed
+    ## before running motifProfile. For example,
+    ## library("BSgenome.Mmusculus.UCSC.mm10")
+
+    test <- m6Aboost(test, "BSgenome.Mmusculus.UCSC.mm10")
+}
 \author{
-You Zhou, Kathi Zarnack
+You Zhou
 }

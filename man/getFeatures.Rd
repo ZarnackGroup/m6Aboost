@@ -5,9 +5,10 @@
 \alias{getFeatures,GRanges-method}
 \title{getFeatures for the miCILP2 data}
 \usage{
-getFeatures(object, annotation, colname_reads = "")
+getFeatures(object, annotation, colname_reads = "", colname_C2T = "")
 
-\S4method{getFeatures}{GRanges}(object, annotation, colname_reads = "")
+\S4method{getFeatures}{GRanges}(
+    object, annotation, colname_reads = "", colname_C2T = "")
 }
 \arguments{
 \item{object}{A GRanges object which should contains all the single
@@ -20,6 +21,9 @@ https://www.gencodegenes.org/}
 \item{colname_reads}{The name of the meta data column which contains the
 mean value of the truncation reads number without C to T transition
 reads.}
+
+\item{colname_C2T}{The name of the meta data column which contains the
+mean value of C to T transition read counts.}
 }
 \value{
 A GRanges object with all the information that required by the
@@ -29,6 +33,14 @@ A GRanges object with all the information that required by the
 An function for calculating the relative signal strength and
     assign the features for the m6Aboost model
 }
+\examples{
+    testpath <- system.file("extdata", package = "m6Aboost")
+    test_gff3 <- file.path(testpath, "test_annotation.gff3")
+    test <- readRDS(file.path(testpath, "test.rds"))
+    test<- getFeatures(test, test_gff3, colname_reads="WTmean",
+        colname_C2T="CtoTmean")
+
+}
 \author{
-You Zhou, Kathi Zarnack
+You Zhou
 }
