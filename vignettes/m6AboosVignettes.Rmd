@@ -4,6 +4,9 @@ author:
 - name: "You Zhou"
   affiliation: 
   - Buchmann Institute for Molecular Life Sciences, Frankfurt am Main, Germany
+- name: "Kathi Zarnack"
+  affiliation: 
+  - Buchmann Institute for Molecular Life Sciences, Frankfurt am Main, Germany
 date: "`r format(Sys.time(), '%B %d, %Y')`"
 bibliography: library.bib
 output:
