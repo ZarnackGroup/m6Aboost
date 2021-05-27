@@ -238,7 +238,7 @@ can access the raw model with the following code:
 ```{r echo=TRUE}
 ## firstly user need to load the ExperimentHub
 library(ExperimentHub)
-eh <-  ExperimentHub()
+eh <- ExperimentHub()
 ## "EH6021" is the retrieve record of the m6Aboost
 model <-  eh[["EH6021"]]
 ## here shows more information about the stored model

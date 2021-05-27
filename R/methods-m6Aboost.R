@@ -69,8 +69,8 @@ setMethod("m6Aboost", signature(object="GRanges"),
 
         df <- .transDF(object, genome)
         ## load model
-        eh = ExperimentHub::ExperimentHub()
-        model = eh[["EH6021"]]
+        eh <- ExperimentHub::ExperimentHub()
+        model <- eh[["EH6021"]]
 
         df$log2SOB <- df$log2RSS
         df$log2RSS <- NULL
