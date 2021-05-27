@@ -1,0 +1,3 @@
+"Title","Description","BiocVersion","Genome","SourceType","SourceUrl","SourceVersion","Species","TaxonomyId","Coordinate_1_based","DataProvider","Maintainer","RDataClass","DispatchClass","RDataPath","Tags"
+"The m6Aboost machine learning model","The machine learning model which use for identify the m6A
+        signals from miCLIP2 data set","3.13",NA,"RDS","https://github.com/Codezy99/m6Aboost/blob/main/m6Aboost.rds","1",NA,NA,NA,"Zarnack's lab","You Zhou <youzhoulearning@gmail.com>","boosting","Rds","m6Aboost/m6Aboost.rds",""
