@@ -235,7 +235,7 @@ more stringent cutoff can be applied if needed.
 The raw model **m6Aboost** is stored in `r Biocpkg("ExperimentHub")`. Users 
 can access the raw model with the following code:
 
-```{r echo=TRUE}
+```{r echo=TRUE,message=FALSE}
 ## firstly user need to load the ExperimentHub
 library(ExperimentHub)
 eh <- ExperimentHub()
