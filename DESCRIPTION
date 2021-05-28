@@ -31,4 +31,4 @@ Imports:
 Depends: 
     S4Vectors, adabag, GenomicRanges, R (>= 4.1)
 Suggests: 
-    knitr, rmarkdown, bookdown, testthat, BiocStyle
+    knitr, rmarkdown, bookdown, testthat, BiocStyle, BSgenome.Mmusculus.UCSC.mm10
