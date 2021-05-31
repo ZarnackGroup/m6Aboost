@@ -12,10 +12,10 @@
     fn <- rtracklayer::import.bw(con = file_N)
     strand(fp) <- "+"
     strand(fn) <- "-"
-    ## shift 1nt of C2T position (easy to assign the value to peaks)
+    ## shift 1nt to the A position (easy to assign the value to peaks)
     fp <- shift(fp, shift = -1)
     fn <- shift(fn, shift = 1)
-    ## Combine both strands and shift to A position
+    ## Combine both strands
     bw <- c(fp, fn)
     return(bw)
 }
