@@ -1,6 +1,7 @@
 context("CtoTAssignment")
 library(m6Aboost)
 
+if (.Platform$OS.type != "windows") {
 test_that("CtoTAssignment works as expected",{
     testpath <- system.file("extdata", package = "m6Aboost")
     test <- readRDS(file.path(testpath, "test.rds"))
@@ -13,3 +14,4 @@ test_that("CtoTAssignment works as expected",{
     expect_is(test$CtoT_WT1, "numeric")
 }
 )
+}

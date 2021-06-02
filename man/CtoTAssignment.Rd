@@ -34,12 +34,14 @@ An function for assigning the CtoT transition read counts from
     bigWig.
 }
 \examples{
+if (.Platform$OS.type != "windows") {
     testpath <- system.file("extdata", package = "m6Aboost")
     test <- readRDS(file.path(testpath, "test.rds"))
     ctotBw_p <- file.path(testpath, "C2T_positive.bw")
     ctotBw_n <- file.path(testpath, "C2T_negative.bw")
     test <- CtoTAssignment(test, bw_positive=ctotBw_p, bw_negative=ctotBw_n,
         sampleName = "CtoT_WT1")
+}
 
 }
 \author{

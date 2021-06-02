@@ -98,12 +98,16 @@ setGeneric("m6Aboost",
 #' @return A GRanges object with the truncation read counts.
 #'
 #' @examples
+#' if (.Platform$OS.type != "windows") {
 #'     testpath <- system.file("extdata", package = "m6Aboost")
 #'     test <- readRDS(file.path(testpath, "test.rds"))
 #'     truncationBw_p <- file.path(testpath, "truncation_positive.bw")
 #'     truncationBw_n <- file.path(testpath, "truncation_negative.bw")
 #'     test <- truncationAssignment(test, bw_positive=truncationBw_p,
 #'         bw_negative=truncationBw_n, sampleName = "WT1")
+#'
+#' }
+#'
 #' @export
 #'
 #' @rdname truncationAssignment
@@ -134,12 +138,14 @@ setGeneric("truncationAssignment",
 #' @return A GRanges object with the truncation read counts.
 #'
 #' @examples
+#' if (.Platform$OS.type != "windows") {
 #'     testpath <- system.file("extdata", package = "m6Aboost")
 #'     test <- readRDS(file.path(testpath, "test.rds"))
 #'     ctotBw_p <- file.path(testpath, "C2T_positive.bw")
 #'     ctotBw_n <- file.path(testpath, "C2T_negative.bw")
 #'     test <- CtoTAssignment(test, bw_positive=ctotBw_p, bw_negative=ctotBw_n,
 #'         sampleName = "CtoT_WT1")
+#' }
 #'
 #' @export
 #'

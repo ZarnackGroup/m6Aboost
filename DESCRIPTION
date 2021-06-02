@@ -1,7 +1,7 @@
 Package: m6Aboost
 Type: Package
 Title: m6Aboost
-Version: 0.99.2
+Version: 0.99.3
 Date: 2021-02-25
 Authors@R: c(person(given = "You",
                     family = "Zhou",
@@ -11,7 +11,7 @@ Authors@R: c(person(given = "You",
              person(given = "Kathi",
                     family = "Zarnack",
                     role = c("aut"),
-                    email = "kathi.zarnack at bmls.de",
+                    email = "kathi.zarnack@bmls.de",
                     comment = c(ORCID = "0000-0003-3527-3378")))
 Description: This package can help user to run the m6Aboost model on their own
     miCLIP2 data. The package includes functions to assign the 

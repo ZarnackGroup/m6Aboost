@@ -34,12 +34,16 @@ An function for assigning the truncation read counts from
     bigWig to the GRanges peaks.
 }
 \examples{
+if (.Platform$OS.type != "windows") {
     testpath <- system.file("extdata", package = "m6Aboost")
     test <- readRDS(file.path(testpath, "test.rds"))
     truncationBw_p <- file.path(testpath, "truncation_positive.bw")
     truncationBw_n <- file.path(testpath, "truncation_negative.bw")
     test <- truncationAssignment(test, bw_positive=truncationBw_p,
         bw_negative=truncationBw_n, sampleName = "WT1")
+
+}
+
 }
 \author{
 You Zhou
