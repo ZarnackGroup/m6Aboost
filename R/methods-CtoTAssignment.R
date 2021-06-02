@@ -8,8 +8,8 @@
 
 ## Assign bigWig files with C-to-T transitions to GRanges
 .readBW_C2T <- function(file_P, file_N){
-    fp <- rtracklayer::import.bw(con = file_P)
-    fn <- rtracklayer::import.bw(con = file_N)
+    fp <- import.bw(con = file_P)
+    fn <- import.bw(con = file_N)
     strand(fp) <- "+"
     strand(fn) <- "-"
     ## shift 1nt to the A position (easy to assign the value to peaks)

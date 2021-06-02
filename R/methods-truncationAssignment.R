@@ -11,8 +11,8 @@
 
 ## Import bigWig files with miCLIP2 truncation events
 .readBW <- function(file_P, file_N){
-    fp <- rtracklayer::import.bw(con = file_P)
-    fn <- rtracklayer::import.bw(con = file_N)
+    fp <- import.bw(con = file_P)
+    fn <- import.bw(con = file_N)
     strand(fp) <- "+"
     strand(fn) <- "-"
     bw <- c(fp, fn)
