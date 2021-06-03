@@ -8,6 +8,7 @@
 #' @rawNamespace import(dplyr, except = c(union, intersect, setdiff))
 #' @importFrom S4Vectors mcols
 #' @importFrom utils globalVariables
+#' @importFrom rtracklayer import.gff3
 
 ## ============================================================================
 ## Small functions
