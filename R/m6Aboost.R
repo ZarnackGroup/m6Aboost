@@ -4,6 +4,7 @@
 
 #' @import adabag
 #' @import ExperimentHub
+#' @import AnnotationHub
 #' @importFrom Biostrings getSeq
 #' @importFrom BSgenome getBSgenome
 #' @importFrom rtracklayer import.bw

@@ -28,7 +28,7 @@ Encoding: UTF-8
 RoxygenNote: 7.1.1
 Imports: 
     dplyr, rtracklayer, BSgenome, Biostrings, utils, methods, IRanges, 
-    ExperimentHub
+    ExperimentHub, AnnotationHub
 Depends: 
     S4Vectors, adabag, GenomicRanges, R (>= 4.1)
 Suggests: 
