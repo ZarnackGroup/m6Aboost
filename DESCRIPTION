@@ -1,7 +1,7 @@
 Package: m6Aboost
 Type: Package
 Title: m6Aboost
-Version: 0.99.4
+Version: 0.99.5
 Date: 2021-02-25
 Authors@R: c(person(given = "You",
                     family = "Zhou",
