@@ -36,8 +36,7 @@ required features and predict the m6A sites.
 
 # How to use it
 Documentation (vignette and user manual) is available at the **m6Aboost's** 
-Bioconductor landing page at 
-[m6Aboost](http://bioconductor.org/packages/m6Aboost).
+Bioconductor landing page at http://bioconductor.org/packages/m6Aboost.
 
 ---
 
