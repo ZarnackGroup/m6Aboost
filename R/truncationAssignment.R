@@ -31,8 +31,40 @@
 ## The "truncationAssignment" method for GRanges objects.
 ##
 
-#' @rdname truncationAssignment
-setMethod("truncationAssignment", signature(object="GRanges"),
+#' @title truncationAssignment for assigning the truncation read counts to the
+#'     GRanges object with single nucleotide peaks
+#'
+#' @description An function for assigning the truncation read counts from
+#'     bigWig to the GRanges peaks.
+#' @author You Zhou
+#'
+#' @param object A GRanges object which should contains all the single
+#'     nucleotide peaks of miCLIP2 experiment.
+#' @param bw_positive A path to the bigWig file of truncation read counts
+#'     at the positive strand that output from the preprocess in the m6Aboost
+#'     pipeline.
+#' @param bw_negative A path to the bigWig file of truncation read counts
+#'     at the negative strand that output from the preprocess in the m6Aboost
+#'     pipeline.
+#' @param sampleName The column name that user would like to use for indicating
+#'     the name of the sample.
+#'
+#' @return A GRanges object with the truncation read counts.
+#'
+#' @examples
+#' if (.Platform$OS.type != "windows") {
+#'     testpath <- system.file("extdata", package = "m6Aboost")
+#'     test <- readRDS(file.path(testpath, "test.rds"))
+#'     truncationBw_p <- file.path(testpath, "truncation_positive.bw")
+#'     truncationBw_n <- file.path(testpath, "truncation_negative.bw")
+#'     test <- truncationAssignment(test, bw_positive=truncationBw_p,
+#'         bw_negative=truncationBw_n, sampleName = "WT1")
+#'
+#' }
+#'
+#' @export
+
+truncationAssignment <-
     function(object, bw_positive, bw_negative, sampleName="")
     {
         if (nchar(sampleName) == 0)
@@ -43,4 +75,3 @@ setMethod("truncationAssignment", signature(object="GRanges"),
         object <- .assign_bw_to_grange(object, bw, name = sampleName)
         return(object)
     }
-)

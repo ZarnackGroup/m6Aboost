@@ -1,5 +1,5 @@
 ## ============================================================================
-## The Methods-getFeatures for the GRanges objects
+## The Methods-preparingData for the GRanges objects
 ## ----------------------------------------------------------------------------
 
 #' @import GenomicRanges
@@ -30,31 +30,48 @@ utils::globalVariables(c("elementMetadata", "queryHits" , "geneid",
     "subjectHits", "strand<-", "start<-", "end<-", "gene_id"))
 
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-## The "getFeatures" methods for GRanges objects.
+## The "preparingData" methods for GRanges objects.
 ##
 
-#' @rdname getFeatures
-setMethod("getFeatures", signature(object="GRanges"),
+#' @title preparingData for the miCILP2 data
+#'
+#' @description A function for calculating the relative signal strength and
+#'     extract the features for running the m6Aboost.
+#'
+#' @author You Zhou
+#'
+#' @param object A GRanges object which should contain all single-
+#'     nucleotide peaks from the miCLIP2 experiment.
+#' @param annotation A path to the annotation file. The format of the
+#'     annotation file should be a gff3 file and downloaded from
+#'     https://www.gencodegenes.org/
+#' @param colname_reads The name of the metadata column which contains the
+#'     mean value of the truncation reads number without C to T transition
+#'     reads.
+#' @param colname_C2T The name of the meta data column which contains the
+#'     mean value of C to T transition read counts.
+#'
+#' @return A GRanges object with all information that is required for running
+#'     the m6Aboost model.
+#'
+#' @examples
+#'     testpath <- system.file("extdata", package = "m6Aboost")
+#'     test_gff3 <- file.path(testpath, "test_annotation.gff3")
+#'     test <- readRDS(file.path(testpath, "test.rds"))
+#'     test<- preparingData(test, test_gff3, colname_reads="WTmean",
+#'         colname_C2T="CtoTmean")
+#'
+#' @export
+
+preparingData <-
     function(object, annotation, colname_reads="", colname_C2T="")
     {
         if(!isS4(object))
             stop("The input object should be a GRanges object.")
         meta_name <- names(elementMetadata(object))
-        if(isTRUE(!colname_reads %in% meta_name) |
-            isTRUE(!colname_C2T %in% meta_name))
+        if(!colname_reads %in% meta_name |!colname_C2T %in% meta_name)
             stop("colname_reads and colname_C2T should refer to the respective
                 column names in the elementMetadata of the input object.")
-
-        ## Load annotation file (version 2)
-        # anno <- makeTxDbFromGFF(annotation, format = "gff3")
-        # annoInfo <- import.gff3(annotation)
-        #
-        # anno_gene <- genes(anno)
-        # idx <- match(anno_gene$gene_id, annoInfo$gene_id)
-        # mcols(anno_gene) <- cbind(mcols(anno_gene), mcols(annoInfo)[idx,])
-        #
-        # anno_gene$level <- as.numeric(anno_gene$level)
-        # anno_gene <-  anno_gene[order(anno_gene$level, -width(anno_gene))]
 
         ## Load annotation file
         anno <- rtracklayer::import.gff3(con = annotation)
@@ -77,11 +94,6 @@ setMethod("getFeatures", signature(object="GRanges"),
         ## make the column for running the m6Aboost
         object$CtoT <- elementMetadata(object)[,colname_C2T]
 
-        ## Annotation assignment (version 2)
-        # UTR5 <- fiveUTRsByTranscript(anno) %>% unlist(.)
-        # UTR3 <- threeUTRsByTranscript(anno) %>% unlist(.)
-        # CDS  <- cds(anno)
-
         UTR5 <- anno[anno$type == "five_prime_UTR"]
         UTR3 <- anno[anno$type == "three_prime_UTR"]
         CDS  <- anno[anno$type == "CDS"]
@@ -89,5 +101,4 @@ setMethod("getFeatures", signature(object="GRanges"),
         object <- .assignment(object, UTR3, CDS, UTR5)
         return(object)
     }
-)
 

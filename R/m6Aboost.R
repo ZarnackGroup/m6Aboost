@@ -51,9 +51,41 @@
 ## The "m6Aboost" methods for GRanges objects.
 ##
 
-#' @rdname m6Aboost
-setMethod("m6Aboost", signature(object="GRanges"),
-    function(object, genome="", normalization=TRUE)
+#' @title m6Aboost for identify the m6A peaks from the miCILP2 data
+#'
+#' @description An function for calculating the relative signal strength and
+#'     extracting all the features that required by the m6Aboost model for
+#'     each peak.
+#'
+#' @author You Zhou
+#'
+#' @param object A GRanges object which should contains all the single
+#'     nucleotide peaks of miCLIP2 experiment.
+#' @param genome The name of the BSgenome that you are working with. For
+#'     example "BSgenome.Mmusculus.UCSC.mm10".
+#' @param normalization A logical vector which indicates whether you would like
+#'     normalize the RSS and C to T reads number to the mean value of the
+#'     training set of the model. This will help to reduce the false positive
+#'     rate.
+#'
+#' @return A GRanges object with all the information that is required by the
+#'     m6Aboost model.
+#' @examples
+#'     testpath <- system.file("extdata", package = "m6Aboost")
+#'     test_gff3 <- file.path(testpath, "test_annotation.gff3")
+#'     test <- readRDS(file.path(testpath, "test.rds"))
+#'     test<- preparingData(test, test_gff3, colname_reads="WTmean",
+#'         colname_C2T="CtoTmean")
+#'
+#'     ## The input of m6Aboost should be the output from preparingData function
+#'     ## Please make sure that the correct BSgenome package have installed
+#'     ## before running motifProfile. For example,
+#'     ## library("BSgenome.Mmusculus.UCSC.mm10")
+#'
+#'     test <- m6Aboost(test, "BSgenome.Mmusculus.UCSC.mm10")
+#' @export
+
+m6Aboost <- function(object, genome="", normalization=TRUE)
     {
         if(!is.character(genome))
             stop("Genome should be the name of BSgenome annotation, e.g.
@@ -74,7 +106,7 @@ setMethod("m6Aboost", signature(object="GRanges"),
 
         df$log2SOB <- df$log2RSS
         df$log2RSS <- NULL
-        if (normalization == T) {
+        if (normalization == TRUE) {
             ## The normalization factor based on the our miLCIP2 data
             m <- mean(df$log2SOB)
             df$log2SOB <- df$log2SOB/(m/0.9122623)
@@ -87,4 +119,3 @@ setMethod("m6Aboost", signature(object="GRanges"),
         object$prob <- pred_res$prob[,1]
         return(object)
     }
-)

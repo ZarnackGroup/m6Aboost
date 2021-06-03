@@ -3,7 +3,7 @@ Author: You Zhou, Kathi Zarnack
 
 ---
 
-# Introduction
+## Introduction
 N6-methyladenosine (m6A) is the most abundant internal modification in mRNA. 
 It impacts many different aspects of an mRNA's life, e.g. nuclear export, 
 translation, stability, etc.   
@@ -34,19 +34,19 @@ required features and predict the m6A sites.
 
 ---
 
-# How to use it
-Documentation (vignette and user manual) is available at the **m6Aboost's** 
-Bioconductor landing page at http://bioconductor.org/packages/m6Aboost.
-
----
-
-# Citing m6Aboost
+## Citing m6Aboost
 
 > Körtel, Nadine#, Cornelia Rückle#, You Zhou#, Anke Busch, Peter Hoch-Kraft, 
 FX Reymond Sutandy, Jacob Haase, et al. 2021. “Deep and accurate detection 
 of m6A RNA modifications using miCLIP2 and m6Aboost machine learning.” 
 bioRxiv. https://doi.org/10.1101/2020.12.20.423675.
 
+---
 
+## How to use it
+Documentation (vignette and user manual) is available at the **m6Aboost's** 
+Bioconductor landing page at http://bioconductor.org/packages/m6Aboost.
+
+---
 
 

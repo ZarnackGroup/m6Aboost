@@ -1,7 +1,7 @@
 Package: m6Aboost
 Type: Package
 Title: m6Aboost
-Version: 0.99.3
+Version: 0.99.4
 Date: 2021-02-25
 Authors@R: c(person(given = "You",
                     family = "Zhou",
@@ -15,7 +15,8 @@ Authors@R: c(person(given = "You",
                     comment = c(ORCID = "0000-0003-3527-3378")))
 Description: This package can help user to run the m6Aboost model on their own
     miCLIP2 data. The package includes functions to assign the 
-    read counts and get the features to run the m6Aboost model. More details 
+    read counts and get the features to run the m6Aboost model. 
+    The miCLIP2 data should be stored in a GRanges object. More details 
     can be found in the vignette.
 License: Artistic-2.0
 VignetteBuilder:

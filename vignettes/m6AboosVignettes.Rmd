@@ -60,14 +60,18 @@ the m6A sites.
 
 # Installation
 
-The package is available in GitHub and can be installed via the 
-following code: 
+The `r Biocpkg("m6Aboost")` package is available at
+[https://bioconductor.org](https://bioconductor.org) and can be
+installed via `BiocManager::install`:
 
-```{r install, eval=FALSE}
-install_github("ZarnackGroup/m6Aboost")
+```{r BiocManager, eval=FALSE}
+if (!require("BiocManager"))
+    install.packages("BiocManager")
+BiocManager::install("m6Aboost")
 ```
 
-Load the package into an R session with
+A package only needs to be installed once. Load the package into an
+R session with
 
 ```{r initialize, results="hide", warning=FALSE, message=FALSE}
 library(m6Aboost)
@@ -142,7 +146,7 @@ and C-to-T transitions that are associated with each peak. In
 `CtoTAssignment`, to assign these counts from the imported bigWig files. Note 
 that the values are first assigned separated for each replicate and then 
 averaged into a mean count for the subsequent feature extraction by 
-`getFeatures`.
+`preparingData`.
 
 ```{r eval=TRUE, include=TRUE}
 ## truncationAssignment allows to assign the number of truncation events
@@ -177,14 +181,14 @@ peak$WTmean <- (peak$WT1 + peak$WT2)/2
 
 For training the m6Aboost model, we used the surrounding nucleotide sequence,
 the transcript region harbouring the peak, the number of C-to-T transitions and
-the relative signal strength. The function `getFeatures` allows to extract
-these features. Please note the function `getFeatures` requires
+the relative signal strength. The function `preparingData` allows to extract
+these features. Please note the function `preparingData` requires
 an annotation file that was downloaded from 
 [GENCODE](https://www.gencodegenes.org/).
 
 ```{r}
 ## Extract the features for the m6Aboost prediction
-test <- getFeatures(test, test_gff3, colname_reads="WTmean", 
+test <- preparingData(test, test_gff3, colname_reads="WTmean", 
     colname_C2T="CtoTmean")
 test
 ```
@@ -193,7 +197,7 @@ test
 
 The function `m6Aboost` performs the prediction, i.e. the classification of the 
 miCLIP2 peaks into m6A sites and background. As input, the function `m6Aboost` 
-uses the output object from the function `getFeatures`. In addition, the user 
+uses the output object from the function `preparingData`. In addition, the user 
 needs to specify the name of the `BSgenome` package associated with the species 
 used for the experiment. Please note that the `BSgenome` package, which 
 contains the sequence information, should be downloaded from `Bioconductor` in 
