@@ -36,10 +36,13 @@ required features and predict the m6A sites.
 
 ## Citing m6Aboost
 
-> Körtel, Nadine#, Cornelia Rückle#, You Zhou#, Anke Busch, Peter Hoch-Kraft, 
-FX Reymond Sutandy, Jacob Haase, et al. 2021. “Deep and accurate detection 
-of m6A RNA modifications using miCLIP2 and m6Aboost machine learning.” 
-bioRxiv. https://doi.org/10.1101/2020.12.20.423675.
+> Nadine Körtel, Cornelia Rücklé, You Zhou, Anke Busch, Peter Hoch-Kraft, F X
+> Reymond Sutandy, Jacob Haase, Mihika Pradhan, Michael Musheev, Dirk Ostareck,
+> Antje Ostareck-Lederer, Christoph Dieterich, Stefan Hüttelmaier, Christof
+> Niehrs, Oliver Rausch, Dan Dominissini, Julian König, Kathi Zarnack, Deep
+> and accurate detection of m6A RNA modifications using miCLIP2 and m6Aboost
+> machine learning, Nucleic Acids Research, Volume 49, Issue 16, 20 September
+> 2021, Page e92, https://doi.org/10.1093/nar/gkab485
 
 ---
 
